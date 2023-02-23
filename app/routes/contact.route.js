@@ -11,8 +11,6 @@ router.route("/")
 router.route("/favorite")
     .get(contacts.findAllFavorite);
 
-router.route('/:id')
-    .get(contacts.findAllFavorite);
 
 router.route("/:id")
     .get(contacts.findOne)

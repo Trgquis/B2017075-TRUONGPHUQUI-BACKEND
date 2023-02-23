@@ -12,6 +12,7 @@ exports.create = async(req, res, next) => {
         const document = await contactService.create(req.body);
         return res.send(document);
     } catch(error) {
+        console.log(error)
         return next(
             new ApiError(500, "An error occurred while creating contact")
         )
@@ -30,6 +31,7 @@ exports.findAll = async(req, res, next) => {
             documents = await contactService.find({});
         }
     } catch(error) {
+        console.log(error)
         return next (
             new ApiError(500, "An error occurred while retrieving contacts")
         )
@@ -70,6 +72,7 @@ exports.update = async (req, res, next) => {
         return res.send({message:"Contact was updated successfully"});
     
     } catch(error) {
+
         return next(
             new ApiError(500, `Error updating contact with id = ${req.params.id}`)
         )
@@ -98,7 +101,11 @@ exports.deleteAll = async (req, res, next) => {
     try{
         const contactService = new ContactService(MongoDB.client);
         const deletedCount = await contactService.deleteAll();
+        return res.send({
+            message: `${deletedCount} contacts were deleted successfully`
+        })
     } catch(error) {
+        console.log(error)
         return next(
             new ApiError(500, "An error occurred while removing all contacts")
         )
